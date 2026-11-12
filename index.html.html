@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استوديو فارس لأتمتة المحاسبة والذكاء الاصطناعي | Fares AI & Finance Automation Studio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo (Arabic) & Inter (English) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#040812',
+                            900: '#091124',
+                            800: '#101C38',
+                            700: '#19294F'
+                        },
+                        emerald: {
+                            400: '#34D399',
+                            500: '#10B981',
+                            600: '#059669'
+                        },
+                        gold: {
+                            400: '#FBBF24',
+                            500: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #040812;
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+        html[dir="rtl"] body {
+            font-family: 'Cairo', sans-serif;
+        }
+        html[dir="ltr"] body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #10B981;
+            border: 3px solid #FBBF24;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #19294F;
+            border-radius: 999px;
+        }
+        .glass-card {
+            background: rgba(16, 28, 56, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-border:hover {
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.25);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500 selection:text-navy-950">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-gold-500 flex items-center justify-center text-navy-950 font-extrabold text-xl shadow-lg">
+                        F
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight text-white block leading-none" data-i18n="brand_name">استوديو فارس للأتمتة</span>
+                        <span class="text-xs text-emerald-400 font-medium" data-i18n="brand_sub">محاسبة ذكية & حلول AI</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links (Desktop) -->
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#demo" class="hover:text-emerald-400 transition" data-i18n="nav_demo">التجربة الحية (Demo)</a>
+                    <a href="#roi" class="hover:text-emerald-400 transition" data-i18n="nav_roi">حاسبة التوفير</a>
+                    <a href="#packages" class="hover:text-emerald-400 transition" data-i18n="nav_packages">الباقات والأسعار</a>
+                    <a href="#process" class="hover:text-emerald-400 transition" data-i18n="nav_process">آلية الربط</a>
+                </div>
+
+                <!-- Actions: Language Switcher & WhatsApp CTA -->
+                <div class="flex items-center gap-3">
+                    <button id="langToggle" onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 border border-white/10 text-xs font-bold text-gold-400 transition flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span id="langLabel">English</span>
+                    </button>
+                    <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%A3%D8%AA%D9%85%D8%AA%D8%A9%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%D8%A7%D8%AA%20%D9%88%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%20%D9%84%D8%B4%D8%B1%D9%83%D8%AA%D9%8A" target="_blank" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-bold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline" data-i18n="nav_cta">تواصل واتساب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-16 pb-24 overflow-hidden">
+        <!-- Background Ambient Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[300px] bg-gold-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <!-- Location Pill -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-navy-800/90 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span data-i18n="hero_badge">إسطنبول والشرق الأوسط • حلول تشغيلية للشركات والمتاجر والعيادات</span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight max-w-4xl mx-auto mb-6" data-i18n="hero_title">
+                حوّل فوضى الفواتير ورسائل العملاء إلى <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-gold-400">نظام مالي ذكي يعمل 24/7</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed" data-i18n="hero_desc">
+                نربط حسابات شركتك ومبيعاتك بلوحات تحكم حية (Live KPI Dashboards) ونركّب لك موظف مبيعات ذكاء اصطناعي على الواتساب يرد بالتركية والعربية والإنجليزية ويسجل الفواتير والمواعيد تلقائياً.
+            </p>
+
+            <!-- Hero Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9%20%D9%84%D8%A3%D8%AA%D9%85%D8%AA%D8%A9%20%D8%B4%D8%B1%D9%83%D8%AA%D9%8A" target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-navy-950 font-extrabold text-base transition flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/25">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <span data-i18n="hero_btn_wa">احجز استشارة مجانية عبر واتساب</span>
+                </a>
+                <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-navy-800 hover:bg-navy-700 text-white border border-white/10 font-bold text-base transition flex items-center justify-center gap-3">
+                    <i data-lucide="play-circle" class="w-5 h-5 text-gold-400"></i>
+                    <span data-i18n="hero_btn_demo">جرّب النظام التفاعلي الآن</span>
+                </a>
+            </div>
+
+            <!-- Trust Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16 pt-10 border-t border-white/10">
+                <div class="p-4 rounded-2xl bg-navy-900/60">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">70%</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1" data-i18n="stat_1">توفير في وقت الإدخال اليدوي</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-navy-900/60">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-gold-400">&lt; 3 ثوانٍ</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1" data-i18n="stat_2">سرعة الرد الآلي على العملاء</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-navy-900/60">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">3 لغات</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1" data-i18n="stat_3">العربية، التركية، الإنجليزية</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-navy-900/60">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-gold-400">48 ساعة</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1" data-i18n="stat_4">للربط والتشغيل الكامل</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Live Mini-Demo Section -->
+    <section id="demo" class="py-20 bg-navy-900/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-gold-400 font-bold text-sm uppercase tracking-wider" data-i18n="demo_tag">معاينة حية للعملاء</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-2" data-i18n="demo_title">شاهد كيف يتفاعل موظف الـ AI مع لوحة حساباتك لحظياً</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base" data-i18n="demo_sub">اضغط على أي أمر في محاكاة الواتساب على اليمين، وراقب كيف تتحدث الأرقام والرسوم البيانية في لوحة المحاسبة فوراً!</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Left/Right: Interactive WhatsApp AI Simulator -->
+                <div class="lg:col-span-5 glass-card rounded-3xl overflow-hidden flex flex-col border border-emerald-500/20 shadow-2xl">
+                    <!-- Phone Header -->
+                    <div class="bg-navy-800 px-5 py-4 flex items-center justify-between border-b border-white/10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400">
+                                <i data-lucide="bot" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-sm" data-i18n="wa_bot_name">مساعد فارس الذكي (AI Agent)</div>
+                                <div class="text-xs text-emerald-400 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    <span data-i18n="wa_status">متصل الآن • يقرأ الفواتير والبيانات</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="resetDemo()" class="text-xs text-slate-400 hover:text-white bg-navy-950/60 px-2.5 py-1.5 rounded-lg border border-white/10 cursor-pointer" data-i18n="wa_reset">إعادة ضبط</button>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div id="chatBox" class="p-5 flex-1 space-y-4 overflow-y-auto max-h-[360px] min-h-[300px] bg-navy-950/70">
+                        <!-- Initial Bot Message -->
+                        <div class="flex items-start gap-2.5">
+                            <div class="bg-navy-800 text-slate-200 rounded-2xl rounded-tr-none px-4 py-3 text-sm max-w-[85%] border border-white/5 leading-relaxed" data-i18n="wa_welcome">
+                                أهلاً بك! أنا مساعدك المالي والتشغيلي. جرّب الضغط على أحد الأزرار بالأسفل لتسجيل مصروف، الاستعلام عن أرباح اليوم، أو حجز موعد عميل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Quick Action Buttons -->
+                    <div class="p-4 bg-navy-800/90 border-t border-white/10">
+                        <div class="text-xs text-slate-400 mb-2.5 font-medium" data-i18n="wa_prompts_label">اضغط لتجربة أمر فوري:</div>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="triggerDemoAction('profit')" class="px-3 py-2 rounded-xl bg-navy-950 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold transition cursor-pointer" data-i18n="btn_profit">
+                                📊 كم صافي ربح اليوم؟
+                            </button>
+                            <button onclick="triggerDemoAction('expense')" class="px-3 py-2 rounded-xl bg-navy-950 hover:bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-semibold transition cursor-pointer" data-i18n="btn_expense">
+                                🧾 سجل فاتورة مصاريف 1,500 ليرة
+                            </button>
+                            <button onclick="triggerDemoAction('booking')" class="px-3 py-2 rounded-xl bg-navy-950 hover:bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-semibold transition cursor-pointer" data-i18n="btn_booking">
+                                📅 حجز موعد عميل جديد (5,000 ليرة)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Financial & KPI Dashboard Preview -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-white/10 shadow-2xl">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-xs font-bold">LIVE SYNC</span>
+                                    <h3 class="font-bold text-lg text-white" data-i18n="dash_title">لوحة المؤشرات المالية الحية (Google Sheets / Odoo)</h3>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1" data-i18n="dash_sub">تتحدث تلقائياً فور وصول أي رسالة واتساب أو صورة فاتورة</p>
+                            </div>
+                            <div class="text-xs text-gold-400 bg-navy-950 px-3 py-1.5 rounded-xl border border-gold-500/20 font-mono" id="lastSyncTime">
+                                Synced: Just now
+                            </div>
+                        </div>
+
+                        <!-- KPI Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+                            <div class="p-4 rounded-2xl bg-navy-950/80 border border-white/5">
+                                <div class="text-xs text-slate-400" data-i18n="kpi_rev">إجمالي مبيعات اليوم</div>
+                                <div class="text-2xl font-extrabold text-white mt-1 font-mono" id="kpiRevenue">24,500 ₺</div>
+                                <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1" id="kpiRevBadge">
+                                    <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +14.2%
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-navy-950/80 border border-white/5">
+                                <div class="text-xs text-slate-400" data-i18n="kpi_exp">المصاريف المسجلة</div>
+                                <div class="text-2xl font-extrabold text-rose-400 mt-1 font-mono" id="kpiExpense">6,200 ₺</div>
+                                <div class="text-xs text-slate-400 mt-1" id="kpiExpCount">4 فواتير مؤتمتة</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/80 to-navy-950 border border-emerald-500/30">
+                                <div class="text-xs text-emerald-300 font-semibold" data-i18n="kpi_net">صافي الربح الفوري</div>
+                                <div class="text-2xl font-extrabold text-emerald-400 mt-1 font-mono" id="kpiNet">18,300 ₺</div>
+                                <div class="text-xs text-gold-400 mt-1" data-i18n="kpi_margin">هامش ربح 74.6%</div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Automated Ledger Entries -->
+                        <div>
+                            <div class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3" data-i18n="ledger_title">آخر القيود المرحّلة تلقائياً بواسطة AI</div>
+                            <div class="overflow-x-auto rounded-2xl border border-white/10">
+                                <table class="w-full text-sm text-right">
+                                    <thead class="bg-navy-950 text-slate-400 text-xs">
+                                        <tr>
+                                            <th class="py-2.5 px-4" data-i18n="th_type">النوع</th>
+                                            <th class="py-2.5 px-4" data-i18n="th_desc">البيان / المصدر</th>
+                                            <th class="py-2.5 px-4" data-i18n="th_amount">المبلغ</th>
+                                            <th class="py-2.5 px-4" data-i18n="th_status">الحالة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ledgerBody" class="divide-y divide-white/5 bg-navy-900/40 text-xs sm:text-sm">
+                                        <tr>
+                                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold text-xs">إيراد</span></td>
+                                            <td class="py-3 px-4 text-slate-200">طلب متجر إلكتروني #1042</td>
+                                            <td class="py-3 px-4 font-mono text-emerald-400 font-bold">+8,500 ₺</td>
+                                            <td class="py-3 px-4 text-slate-400">مؤكد آلياً</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold text-xs">مصروف</span></td>
+                                            <td class="py-3 px-4 text-slate-200">فاتورة شحن وتغليف (صورة واتساب)</td>
+                                            <td class="py-3 px-4 font-mono text-rose-400 font-bold">-2,200 ₺</td>
+                                            <td class="py-3 px-4 text-slate-400">مؤرشف</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Live ROI & Time-Saving Calculator -->
+    <section id="roi" class="py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-6 sm:p-12 border border-gold-500/20 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-64 h-64 bg-gold-500/5 blur-3xl rounded-full pointer-events-none"></div>
+                
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-emerald-400 font-bold text-sm uppercase tracking-wider" data-i18n="roi_tag">حاسبة العائد على الاستثمار (ROI)</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-2" data-i18n="roi_title">احسب كم ساعة ومبلغاً توفره لشركتك شهرياً</h2>
+                    <p class="text-slate-400 mt-2 text-sm sm:text-base" data-i18n="roi_sub">حرّك المؤشرات حسب حجم عملك الشهري لترى التوفير الفوري</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <!-- Sliders -->
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="text-sm font-bold text-slate-200" data-i18n="slider_invoices">عدد الفواتير والقيود الشهرية</label>
+                                <span class="px-3 py-1 rounded-lg bg-navy-950 text-emerald-400 font-mono font-bold text-base border border-emerald-500/30" id="invoiceCountVal">350</span>
+                            </div>
+                            <input type="range" id="invoiceSlider" min="50" max="2000" step="50" value="350" class="w-full" oninput="calculateROI()">
+                            <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
+                                <span>50</span>
+                                <span>1,000</span>
+                                <span>2,000+</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="text-sm font-bold text-slate-200" data-i18n="slider_messages">رسائل واستفسارات العملاء شهرياً</label>
+                                <span class="px-3 py-1 rounded-lg bg-navy-950 text-gold-400 font-mono font-bold text-base border border-gold-500/30" id="messageCountVal">1,200</span>
+                            </div>
+                            <input type="range" id="messageSlider" min="100" max="10000" step="100" value="1200" class="w-full" oninput="calculateROI()">
+                            <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
+                                <span>100</span>
+                                <span>5,000</span>
+                                <span>10,000+</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Output Box -->
+                    <div class="bg-navy-950/90 rounded-2xl p-6 sm:p-8 border border-white/10 space-y-6">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="res_hours_label">ساعات العمل اليدوي الموفرة شهرياً</div>
+                                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mt-1 font-mono"><span id="savedHours">104</span> <span class="text-base font-normal text-slate-300" data-i18n="hours_unit">ساعة / شهر</span></div>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="res_money_label">التوفير التشغيلي المقدر شهرياً</div>
+                                <div class="text-3xl sm:text-4xl font-extrabold text-gold-400 mt-1 font-mono">$<span id="savedUSD">830</span></div>
+                                <div class="text-xs text-slate-400 mt-1 font-mono">≈ <span id="savedTRY">28,600</span> TRY / شهر</div>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-gold-500/10 flex items-center justify-center text-gold-400">
+                                <i data-lucide="wallet" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D8%AD%D8%B3%D8%A8%D8%AA%20%D8%A7%D9%84%D8%AA%D9%88%D9%81%D9%8A%D8%B1%20%D8%B9%D9%84%D9%89%20%D9%85%D9%88%D9%82%D8%B9%D9%83%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A8%D8%AF%D8%A1%20%D8%A7%D9%84%D8%A3%D8%AA%D9%85%D8%AA%D8%A9" target="_blank" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-bold text-sm transition flex items-center justify-center gap-2">
+                            <span data-i18n="roi_cta">ابدأ بتوفير هذا المبلغ لشركتك الآن</span>
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Service Packages Section -->
+    <section id="packages" class="py-20 bg-navy-900/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-gold-400 font-bold text-sm uppercase tracking-wider" data-i18n="pkg_tag">باقات واضحة وشفافة</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-2" data-i18n="pkg_title">اختر النظام المناسب لمرحلة نمو شركتك</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base" data-i18n="pkg_sub">تُدفع رسوم الإعداد مرة واحدة (50% عند البدء و50% عند التسليم)، مع دعم فني وتحديث مستمر</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Package 1 -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between glow-border transition duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-6">
+                            <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white" data-i18n="pkg1_name">ضبط الحسابات ولوحة المؤشرات الحية</h3>
+                        <p class="text-xs text-slate-400 mt-1" data-i18n="pkg1_en">Automated Bookkeeping & Live KPI Dashboard</p>
+                        
+                        <div class="my-6 pb-6 border-b border-white/10">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-extrabold text-white font-mono">$350</span>
+                                <span class="text-xs text-slate-400" data-i18n="setup_fee">إعداد لمرة واحدة</span>
+                            </div>
+                            <div class="text-xs text-emerald-400 mt-1 font-mono" data-i18n="pkg1_retainer">+ $90 / شهرياً صيانة وتقارير آلية</div>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg1_f1">بناء قاعدة بيانات مالية شاملة (مبيعات، مصاريف، ذمم، أرباح)</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg1_f2">قراءة الفواتير المصورة عبر AI وترحيلها تلقائياً للجدول</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg1_f3">تقرير يومي أوتوماتيكي على واتساب المدير بصافي الربح</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg1_f4">تدقيق ومطابقة كشوفات الدفع والبنوك (Reconciliation)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%B6%D8%A8%D8%B7%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%D8%A7%D8%AA%20%D9%88%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%A4%D8%B4%D8%B1%D8%A7%D8%AA" target="_blank" class="mt-8 w-full py-3 rounded-xl bg-navy-800 hover:bg-emerald-500 hover:text-navy-950 text-white border border-emerald-500/30 font-bold text-sm transition text-center block" data-i18n="pkg_btn">
+                        اطلب هذه الباقة
+                    </a>
+                </div>
+
+                <!-- Package 2 (Featured) -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border-2 border-gold-500/60 relative shadow-2xl shadow-gold-500/10">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-gold-500 to-emerald-500 text-navy-950 text-xs font-extrabold uppercase tracking-wide" data-i18n="pkg_popular">
+                        الأكثر طلباً في إسطنبول
+                    </div>
+
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/15 text-gold-400 flex items-center justify-center mb-6">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white" data-i18n="pkg2_name">موظف المبيعات والحجوزات الذكي على واتساب</h3>
+                        <p class="text-xs text-slate-400 mt-1" data-i18n="pkg2_en">WhatsApp AI Sales & Booking Receptionist</p>
+                        
+                        <div class="my-6 pb-6 border-b border-white/10">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-extrabold text-gold-400 font-mono">$500</span>
+                                <span class="text-xs text-slate-400" data-i18n="setup_fee">إعداد لمرة واحدة</span>
+                            </div>
+                            <div class="text-xs text-emerald-400 mt-1 font-mono" data-i18n="pkg2_retainer">+ $150 / شهرياً إدارة وتطوير مستمر</div>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-200">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg2_f1">رد فوري 24/7 على واتساب وإنستغرام بالتركي والعربي والإنجليزي</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg2_f2">مدرّب بالكامل على كتالوج أسعارك وخدماتك وسياسات شركتك</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg2_f3">حجز المواعيد في Google Calendar وتسجيل الطلبات في CRM تلقائياً</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg2_f4">إرسال تنبيهات متابعة للعملاء المهتمين لزيادة نسبة إغلاق المبيعات</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D9%85%D9%88%D8%B8%D9%81%20%D8%A7%D9%84%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8%20%D8%A7%D9%84%D8%B0%D9%83%D9%8A" target="_blank" class="mt-8 w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-emerald-500 hover:opacity-95 text-navy-950 font-extrabold text-sm transition text-center block shadow-lg" data-i18n="pkg_btn">
+                        اطلب هذه الباقة
+                    </a>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between glow-border transition duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center mb-6">
+                            <i data-lucide="boxes" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white" data-i18n="pkg3_name">أتمتة المخزون والمشتريات المتكاملة</h3>
+                        <p class="text-xs text-slate-400 mt-1" data-i18n="pkg3_en">Smart Inventory & Procurement Automation</p>
+                        
+                        <div class="my-6 pb-6 border-b border-white/10">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-extrabold text-white font-mono">$650</span>
+                                <span class="text-xs text-slate-400" data-i18n="setup_fee">إعداد لمرة واحدة</span>
+                            </div>
+                            <div class="text-xs text-emerald-400 mt-1 font-mono" data-i18n="pkg3_retainer">+ $180 / شهرياً دعم وربط API</div>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg3_f1">ربط المتجر الإلكتروني أو نظام البيع (Odoo / Shopify) بالمخزون</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg3_f2">تنبيهات ذكية على واتساب قبل نفاد أي صنف من المستودع</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg3_f3">توليد أوامر الشراء (Purchase Orders) للموردين بضغطة زر</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-1"></i>
+                                <span data-i18n="pkg3_f4">تحليل الأصناف الأكثر ربحية والأبطأ حركة بالذكاء الاصطناعي</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/905346385030?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%81%D8%A7%D8%B1%D8%B3%D8%8C%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A3%D8%AA%D9%85%D8%AA%D8%A9%20%D8%A7%D9%84%D9%85%D8%AE%D8%B2%D9%88%D9%86%20%D9%88%D8%A7%D9%84%D9%85%D8%B4%D8%AA%D8%B1%D9%8A%D8%A7%D8%AA" target="_blank" class="mt-8 w-full py-3 rounded-xl bg-navy-800 hover:bg-sky-500 hover:text-navy-950 text-white border border-sky-500/30 font-bold text-sm transition text-center block" data-i18n="pkg_btn">
+                        اطلب هذه الباقة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4-Step Process: How We Connect to Your Business -->
+    <section id="process" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-emerald-400 font-bold text-sm uppercase tracking-wider" data-i18n="proc_tag">آلية عمل آمنة وسريعة</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-2" data-i18n="proc_title">كيف نربط النظام بشركتك في 4 خطوات بسيطة؟</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base" data-i18n="proc_sub">لا نطلب أي صلاحيات بنكية حساسة، ونبني النظام فوق أدواتك الحالية بسلاسة وأمان تام</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="glass-card rounded-3xl p-6 relative">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500 text-navy-950 font-extrabold flex items-center justify-center text-lg mb-5">1</div>
+                    <h3 class="font-bold text-lg text-white mb-2" data-i18n="step1_t">تحليل البيانات والاحتياج</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-i18n="step1_d">جلسة 20 دقيقة لفهم سير العمل الحالي واستلام عينة من ملفات الإكسل أو قائمة الأسعار.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card rounded-3xl p-6 relative">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500 text-navy-950 font-extrabold flex items-center justify-center text-lg mb-5">2</div>
+                    <h3 class="font-bold text-lg text-white mb-2" data-i18n="step2_t">بناء القاعدة واللوحات</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-i18n="step2_d">تصميم نظام الجداول الذكية ولوحة المؤشرات المالية المخصصة لهوية وأرقام شركتك.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card rounded-3xl p-6 relative">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500 text-navy-950 font-extrabold flex items-center justify-center text-lg mb-5">3</div>
+                    <h3 class="font-bold text-lg text-white mb-2" data-i18n="step3_t">الربط وتدريب الـ AI</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-i18n="step3_d">ربط واتساب الشركة وقارئ الفواتير الآلي مع لوحة البيانات واختبار كل السيناريوهات.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass-card rounded-3xl p-6 relative">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500 text-navy-950 font-extrabold flex items-center justify-center text-lg mb-5">4</div>
+                    <h3 class="font-bold text-lg text-white mb-2" data-i18n="step4_t">التسليم وتدريب الفريق</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed" data-i18n="step4_d">تسليمك رابط المتابعة على موبايلك مع شرح مبسط لفريقك ومتابعة مستمرة لضمان الأداء.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direct Contact & Footer CTA -->
+    <footer class="bg-navy-950 border-t border-white/10 pt-16 pb-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-4" data-i18n="cta_title">جاهز لتحويل شركتك إلى العمل المؤتمت؟</h2>
+            <p class="text-slate-400 max-w-xl mx-auto mb-8 text-sm sm:text-base" data-i18n="cta_sub">تواصل معي مباشرة عبر واتساب أو البريد الإلكتروني لمناقشة نظام مخصص لشركتك في إسطنبول أو أي مكان.</p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                <a href="https://wa.me/905346385030" target="_blank" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-extrabold text-base transition flex items-center justify-center gap-3">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                    <span dir="ltr">+90 534 638 50 30</span>
+                </a>
+                <a href="mailto:fares.ideaz@gmail.com" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-navy-800 hover:bg-navy-700 text-white border border-white/10 font-bold text-base transition flex items-center justify-center gap-3">
+                    <i data-lucide="mail" class="w-5 h-5 text-gold-400"></i>
+                    <span>fares.ideaz@gmail.com</span>
+                </a>
+            </div>
+
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <div data-i18n="footer_copy">© 2026 استوديو فارس لأتمتة المحاسبة والذكاء الاصطناعي (Fares AI & Finance Automation Studio). جميع الحقوق محفوظة.</div>
+                <div class="flex items-center gap-2 text-slate-400">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Istanbul, Türkiye</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic & Bilingual Dictionary -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // State for Live Demo
+        let demoState = {
+            revenue: 24500,
+            expense: 6200,
+            expCount: 4
+        };
+
+        // Current Language ('ar' default, 'en' toggle)
+        let currentLang = 'ar';
+
+        const translations = {
+            ar: {
+                brand_name: "استوديو فارس للأتمتة",
+                brand_sub: "محاسبة ذكية & حلول AI",
+                nav_demo: "التجربة الحية (Demo)",
+                nav_roi: "حاسبة التوفير",
+                nav_packages: "الباقات والأسعار",
+                nav_process: "آلية الربط",
+                nav_cta: "تواصل واتساب",
+                hero_badge: "إسطنبول والشرق الأوسط • حلول تشغيلية للشركات والمتاجر والعيادات",
+                hero_title: 'حوّل فوضى الفواتير ورسائل العملاء إلى <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-gold-400">نظام مالي ذكي يعمل 24/7</span>',
+                hero_desc: "نربط حسابات شركتك ومبيعاتك بلوحات تحكم حية (Live KPI Dashboards) ونركّب لك موظف مبيعات ذكاء اصطناعي على الواتساب يرد بالتركية والعربية والإنجليزية ويسجل الفواتير والمواعيد تلقائياً.",
+                hero_btn_wa: "احجز استشارة مجانية عبر واتساب",
+                hero_btn_demo: "جرّب النظام التفاعلي الآن",
+                stat_1: "توفير في وقت الإدخال اليدوي",
+                stat_2: "سرعة الرد الآلي على العملاء",
+                stat_3: "العربية، التركية، الإنجليزية",
+                stat_4: "للربط والتشغيل الكامل",
+                demo_tag: "معاينة حية للعملاء",
+                demo_title: "شاهد كيف يتفاعل موظف الـ AI مع لوحة حساباتك لحظياً",
+                demo_sub: "اضغط على أي أمر في محاكاة الواتساب، وراقب كيف تتحدث الأرقام والجدول في لوحة المحاسبة فوراً!",
+                wa_bot_name: "مساعد فارس الذكي (AI Agent)",
+                wa_status: "متصل الآن • يقرأ الفواتير والبيانات",
+                wa_reset: "إعادة ضبط",
+                wa_welcome: "أهلاً بك! أنا مساعدك المالي والتشغيلي. جرّب الضغط على أحد الأزرار بالأسفل لتسجيل مصروف، الاستعلام عن أرباح اليوم، أو حجز موعد عميل.",
+                wa_prompts_label: "اضغط لتجربة أمر فوري:",
+                btn_profit: "📊 كم صافي ربح اليوم؟",
+                btn_expense: "🧾 سجل فاتورة مصاريف 1,500 ليرة",
+                btn_booking: "📅 حجز موعد عميل جديد (5,000 ليرة)",
+                dash_title: "لوحة المؤشرات المالية الحية (Google Sheets / Odoo)",
+                dash_sub: "تتحدث تلقائياً فور وصول أي رسالة واتساب أو صورة فاتورة",
+                kpi_rev: "إجمالي مبيعات اليوم",
+                kpi_exp: "المصاريف المسجلة",
+                kpi_net: "صافي الربح الفوري",
+                kpi_margin: "مؤشر ربحية حي",
+                ledger_title: "آخر القيود المرحّلة تلقائياً بواسطة AI",
+                th_type: "النوع",
+                th_desc: "البيان / المصدر",
+                th_amount: "المبلغ",
+                th_status: "الحالة",
+                roi_tag: "حاسبة العائد على الاستثمار (ROI)",
+                roi_title: "احسب كم ساعة ومبلغاً توفره لشركتك شهرياً",
+                roi_sub: "حرّك المؤشرات حسب حجم عملك الشهري لترى التوفير الفوري",
+                slider_invoices: "عدد الفواتير والقيود الشهرية",
+                slider_messages: "رسائل واستفسارات العملاء شهرياً",
+                res_hours_label: "ساعات العمل اليدوي الموفرة شهرياً",
+                hours_unit: "ساعة / شهر",
+                res_money_label: "التوفير التشغيلي المقدر شهرياً",
+                roi_cta: "ابدأ بتوفير هذا المبلغ لشركتك الآن",
+                pkg_tag: "باقات واضحة وشفافة",
+                pkg_title: "اختر النظام المناسب لمرحلة نمو شركتك",
+                pkg_sub: "تُدفع رسوم الإعداد مرة واحدة (50% عند البدء و50% عند التسليم)، مع دعم فني وتحديث مستمر",
+                setup_fee: "إعداد لمرة واحدة",
+                pkg_popular: "الأكثر طلباً في إسطنبول",
+                pkg_btn: "اطلب هذه الباقة",
+                pkg1_name: "ضبط الحسابات ولوحة المؤشرات الحية",
+                pkg1_en: "Automated Bookkeeping & Live KPI Dashboard",
+                pkg1_retainer: "+ $90 / شهرياً صيانة وتقارير آلية",
+                pkg1_f1: "بناء قاعدة بيانات مالية شاملة (مبيعات، مصاريف، ذمم، أرباح)",
+                pkg1_f2: "قراءة الفواتير المصورة عبر AI وترحيلها تلقائياً للجدول",
+                pkg1_f3: "تقرير يومي أوتوماتيكي على واتساب المدير بصافي الربح",
+                pkg1_f4: "تدقيق ومطابقة كشوفات الدفع والبنوك (Reconciliation)",
+                pkg2_name: "موظف المبيعات والحجوزات الذكي على واتساب",
+                pkg2_en: "WhatsApp AI Sales & Booking Receptionist",
+                pkg2_retainer: "+ $150 / شهرياً إدارة وتطوير مستمر",
+                pkg2_f1: "رد فوري 24/7 على واتساب وإنستغرام بالتركي والعربي والإنجليزي",
+                pkg2_f2: "مدرّب بالكامل على كتالوج أسعارك وخدماتك وسياسات شركتك",
+                pkg2_f3: "حجز المواعيد في Google Calendar وتسجيل الطلبات في CRM تلقائياً",
+                pkg2_f4: "إرسال تنبيهات متابعة للعملاء المهتمين لزيادة نسبة إغلاق المبيعات",
+                pkg3_name: "أتمتة المخزون والمشتريات المتكاملة",
+                pkg3_en: "Smart Inventory & Procurement Automation",
+                pkg3_retainer: "+ $180 / شهرياً دعم وربط API",
+                pkg3_f1: "ربط المتجر الإلكتروني أو نظام البيع (Odoo / Shopify) بالمخزون",
+                pkg3_f2: "تنبيهات ذكية على واتساب قبل نفاد أي صنف من المستودع",
+                pkg3_f3: "توليد أوامر الشراء (Purchase Orders) للموردين بضغطة زر",
+                pkg3_f4: "تحليل الأصناف الأكثر ربحية والأبطأ حركة بالذكاء الاصطناعي",
+                proc_tag: "آلية عمل آمنة وسريعة",
+                proc_title: "كيف نربط النظام بشركتك في 4 خطوات بسيطة؟",
+                proc_sub: "لا نطلب أي صلاحيات بنكية حساسة، ونبني النظام فوق أدواتك الحالية بسلاسة وأمان تام",
+                step1_t: "تحليل البيانات والاحتياج",
+                step1_d: "جلسة 20 دقيقة لفهم سير العمل الحالي واستلام عينة من ملفات الإكسل أو قائمة الأسعار.",
+                step2_t: "بناء القاعدة واللوحات",
+                step2_d: "تصميم نظام الجداول الذكية ولوحة المؤشرات المالية المخصصة لهوية وأرقام شركتك.",
+                step3_t: "الربط وتدريب الـ AI",
+                step3_d: "ربط واتساب الشركة وقارئ الفواتير الآلي مع لوحة البيانات واختبار كل السيناريوهات.",
+                step4_t: "التسليم وتدريب الفريق",
+                step4_d: "تسليمك رابط المتابعة على موبايلك مع شرح مبسط لفريقك ومتابعة مستمرة لضمان الأداء.",
+                cta_title: "جاهز لتحويل شركتك إلى العمل المؤتمت؟",
+                cta_sub: "تواصل معي مباشرة عبر واتساب أو البريد الإلكتروني لمناقشة نظام مخصص لشركتك في إسطنبول أو أي مكان.",
+                footer_copy: "© 2026 استوديو فارس لأتمتة المحاسبة والذكاء الاصطناعي (Fares AI & Finance Automation Studio). جميع الحقوق محفوظة."
+            },
+            en: {
+                brand_name: "Fares Automation Studio",
+                brand_sub: "Smart Accounting & AI Solutions",
+                nav_demo: "Live Demo",
+                nav_roi: "ROI Calculator",
+                nav_packages: "Packages & Pricing",
+                nav_process: "How It Works",
+                nav_cta: "WhatsApp Us",
+                hero_badge: "Istanbul & MENA • Operational Automation for Businesses, Clinics & E-Commerce",
+                hero_title: 'Turn Invoice Chaos & Customer Chats into a <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-gold-400">24/7 Automated Financial System</span>',
+                hero_desc: "We connect your company's accounts and sales to Live KPI Dashboards and deploy a multilingual WhatsApp AI receptionist (Arabic, Turkish, English) that logs invoices and bookings automatically.",
+                hero_btn_wa: "Book Free Consultation on WhatsApp",
+                hero_btn_demo: "Try Interactive Demo Now",
+                stat_1: "Reduction in Manual Data Entry",
+                stat_2: "Instant AI Customer Response",
+                stat_3: "Arabic, Turkish & English",
+                stat_4: "Full Setup & Integration",
+                demo_tag: "Interactive Client Showcase",
+                demo_title: "See How the AI Agent Updates Your Accounting Dashboard in Real Time",
+                demo_sub: "Click any command in the WhatsApp simulator and watch your financial KPIs and ledger update instantly!",
+                wa_bot_name: "Fares AI Assistant",
+                wa_status: "Online • Reading Invoices & Data",
+                wa_reset: "Reset",
+                wa_welcome: "Welcome! I am your financial & operations AI assistant. Click one of the buttons below to log an expense, check today's net profit, or book a new client.",
+                wa_prompts_label: "Click to test an instant command:",
+                btn_profit: "📊 What is today's net profit?",
+                btn_expense: "🧾 Log 1,500 TRY expense invoice",
+                btn_booking: "📅 Book new client (5,000 TRY)",
+                dash_title: "Live Financial KPI Dashboard (Google Sheets / Odoo)",
+                dash_sub: "Updates automatically upon receiving any WhatsApp message or invoice photo",
+                kpi_rev: "Today's Total Revenue",
+                kpi_exp: "Logged Expenses",
+                kpi_net: "Real-Time Net Profit",
+                kpi_margin: "Live Profit Margin",
+                ledger_title: "Latest Ledger Entries Auto-Logged by AI",
+                th_type: "Type",
+                th_desc: "Description / Source",
+                th_amount: "Amount",
+                th_status: "Status",
+                roi_tag: "ROI & Time-Saving Calculator",
+                roi_title: "Calculate How Many Hours & Dollars You Save Monthly",
+                roi_sub: "Adjust the sliders based on your monthly volume to see immediate operational savings",
+                slider_invoices: "Monthly Invoices & Ledger Entries",
+                slider_messages: "Monthly Customer Messages & Inquiries",
+                res_hours_label: "Manual Work Hours Saved Monthly",
+                hours_unit: "hrs / mo",
+                res_money_label: "Estimated Monthly Operational Savings",
+                roi_cta: "Start Saving This Amount for Your Business",
+                pkg_tag: "Transparent Pricing Tiers",
+                pkg_title: "Choose the Right Automation System for Your Growth",
+                pkg_sub: "One-time setup fee (50% upfront, 50% upon delivery) with ongoing technical support",
+                setup_fee: "one-time setup",
+                pkg_popular: "Most Popular in Istanbul",
+                pkg_btn: "Request This Package",
+                pkg1_name: "Automated Bookkeeping & Live KPI Dashboard",
+                pkg1_en: "Financial Tracking & Automated Daily Reporting",
+                pkg1_retainer: "+ $90 / mo maintenance & automated reports",
+                pkg1_f1: "Build a structured financial database (sales, expenses, receivables, profit)",
+                pkg1_f2: "AI receipt & invoice photo scanning directly into your ledger",
+                pkg1_f3: "Automated daily WhatsApp summary sent to management with net profit",
+                pkg1_f4: "Payment processor & bank statement reconciliation",
+                pkg2_name: "WhatsApp AI Sales & Booking Receptionist",
+                pkg2_en: "24/7 Multilingual Customer Support & Lead Capture",
+                pkg2_retainer: "+ $150 / mo management & optimization",
+                pkg2_f1: "Instant 24/7 replies on WhatsApp & Instagram in Turkish, Arabic & English",
+                pkg2_f2: "Trained on your exact pricing catalog, services, and company policies",
+                pkg2_f3: "Auto-books appointments in Google Calendar & logs leads in CRM",
+                pkg2_f4: "Automated follow-up messages to boost sales conversion rates",
+                pkg3_name: "Smart Inventory & Procurement Automation",
+                pkg3_en: "Stock Alerts & Automated Purchase Orders",
+                pkg3_retainer: "+ $180 / mo API support & monitoring",
+                pkg3_f1: "Connect your e-commerce store or POS (Odoo / Shopify) to stock sheets",
+                pkg3_f2: "Smart WhatsApp alerts before any product runs out of stock",
+                pkg3_f3: "One-click Purchase Order generation for suppliers",
+                pkg3_f4: "AI analysis of highest-margin and slow-moving inventory items",
+                proc_tag: "Safe & Fast Onboarding",
+                proc_title: "How We Connect to Your Business in 4 Simple Steps",
+                proc_sub: "We never ask for sensitive banking credentials—we build cleanly on top of your existing tools",
+                step1_t: "Data & Workflow Audit",
+                step1_d: "A 20-minute session to map your workflow and review sample Excel files or price lists.",
+                step2_t: "Database & Dashboard Build",
+                step2_d: "Architecting your smart spreadsheets and KPI dashboards tailored to your business.",
+                step3_t: "AI Integration & Training",
+                step3_d: "Connecting your WhatsApp Business and AI invoice reader to your live sheets.",
+                step4_t: "Handover & Team Training",
+                step4_d: "Delivering mobile dashboard access with simple team training and continuous support.",
+                cta_title: "Ready to Automate Your Business Operations?",
+                cta_sub: "Contact me directly on WhatsApp or email to discuss a tailored automation setup for your company in Istanbul or MENA.",
+                footer_copy: "© 2026 Fares AI & Finance Automation Studio. All rights reserved."
+            }
+        };
+
+        // Toggle Arabic / English
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const htmlEl = document.documentElement;
+            htmlEl.setAttribute('lang', currentLang);
+            htmlEl.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+            updateDashboardUI();
+        }
+
+        // Append Chat Bubble Helper
+        function appendChatMessage(sender, text) {
+            const chatBox = document.getElementById('chatBox');
+            const wrapper = document.createElement('div');
+            wrapper.className = sender === 'user' ? 'flex justify-end' : 'flex items-start gap-2.5';
+
+            const bubble = document.createElement('div');
+            bubble.className = sender === 'user'
+                ? 'bg-emerald-500 text-navy-950 font-semibold rounded-2xl rounded-tl-none px-4 py-2.5 text-sm max-w-[85%] shadow-md'
+                : 'bg-navy-800 text-slate-200 rounded-2xl rounded-tr-none px-4 py-3 text-sm max-w-[85%] border border-emerald-500/20 leading-relaxed';
+            bubble.innerHTML = text;
+
+            wrapper.appendChild(bubble);
+            chatBox.appendChild(wrapper);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Update Dashboard Numbers & Ledger
+        function updateDashboardUI() {
+            const net = demoState.revenue - demoState.expense;
+            document.getElementById('kpiRevenue').textContent = demoState.revenue.toLocaleString() + ' ₺';
+            document.getElementById('kpiExpense').textContent = demoState.expense.toLocaleString() + ' ₺';
+            document.getElementById('kpiNet').textContent = net.toLocaleString() + ' ₺';
+            document.getElementById('kpiExpCount').textContent = currentLang === 'ar'
+                ? `${demoState.expCount} فواتير مؤتمتة`
+                : `${demoState.expCount} automated invoices`;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('lastSyncTime').textContent = `Synced: ${timeStr}`;
+        }
+
+        function addLedgerRow(type, desc, amount, isPositive) {
+            const tbody = document.getElementById('ledgerBody');
+            const tr = document.createElement('tr');
+            tr.className = 'bg-emerald-500/5 transition-colors duration-700';
+
+            const badgeClass = isPositive
+                ? 'bg-emerald-500/20 text-emerald-400'
+                : 'bg-rose-500/20 text-rose-400';
+            const amountClass = isPositive ? 'text-emerald-400' : 'text-rose-400';
+            const statusText = currentLang === 'ar' ? 'مُرحّل للتو ⚡' : 'Synced Now ⚡';
+
+            tr.innerHTML = `
+                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded ${badgeClass} font-bold text-xs">${type}</span></td>
+                <td class="py-3 px-4 text-white font-medium">${desc}</td>
+                <td class="py-3 px-4 font-mono ${amountClass} font-bold">${amount}</td>
+                <td class="py-3 px-4 text-gold-400 text-xs font-semibold">${statusText}</td>
+            `;
+            tbody.insertBefore(tr, tbody.firstChild);
+        }
+
+        // Handle Interactive Demo Buttons
+        function triggerDemoAction(action) {
+            const net = demoState.revenue - demoState.expense;
+
+            if (action === 'profit') {
+                const userMsg = currentLang === 'ar' ? 'كم صافي ربح اليوم؟' : "What is today's net profit?";
+                const botReply = currentLang === 'ar'
+                    ? `📊 <b>ملخص اليوم الفوري:</b><br>• المبيعات: ${demoState.revenue.toLocaleString()} ₺<br>• المصاريف: ${demoState.expense.toLocaleString()} ₺<br>• <b>صافي الربح: ${net.toLocaleString()} ₺</b>`
+                    : `📊 <b>Today's Live Summary:</b><br>• Revenue: ${demoState.revenue.toLocaleString()} ₺<br>• Expenses: ${demoState.expense.toLocaleString()} ₺<br>• <b>Net Profit: ${net.toLocaleString()} ₺</b>`;
+
+                appendChatMessage('user', userMsg);
+                setTimeout(() => appendChatMessage('bot', botReply), 350);
+
+            } else if (action === 'expense') {
+                demoState.expense += 1500;
+                demoState.expCount += 1;
+                const newNet = demoState.revenue - demoState.expense;
+
+                const userMsg = currentLang === 'ar' ? 'سجل فاتورة مصاريف 1,500 ليرة' : 'Log 1,500 TRY expense invoice';
+                const botReply = currentLang === 'ar'
+                    ? `✅ تم تسجيل مصروف بقيمة <b>1,500 ₺</b> في جدول المصاريف وتحديث لوحة المؤشرات.<br>صافي الربح المحدّث الآن: <b>${newNet.toLocaleString()} ₺</b>`
+                    : `✅ Logged <b>1,500 ₺</b> expense into your ledger and updated the live dashboard.<br>Updated Net Profit: <b>${newNet.toLocaleString()} ₺</b>`;
+
+                appendChatMessage('user', userMsg);
+                setTimeout(() => {
+                    appendChatMessage('bot', botReply);
+                    updateDashboardUI();
+                    addLedgerRow(
+                        currentLang === 'ar' ? 'مصروف' : 'Expense',
+                        currentLang === 'ar' ? 'فاتورة مصاريف تشغيلية (واتساب AI)' : 'Operational Expense (WhatsApp AI)',
+                        '-1,500 ₺',
+                        false
+                    );
+                }, 350);
+
+            } else if (action === 'booking') {
+                demoState.revenue += 5000;
+                const newNet = demoState.revenue - demoState.expense;
+
+                const userMsg = currentLang === 'ar' ? 'حجز موعد عميل جديد (5,000 ليرة)' : 'Book new client (5,000 TRY)';
+                const botReply = currentLang === 'ar'
+                    ? `📅 تم تأكيد حجز العميل في التقويم وتسجيل إيراد بقيمة <b>+5,000 ₺</b> تلقائياً.<br>إجمالي مبيعات اليوم: <b>${demoState.revenue.toLocaleString()} ₺</b>`
+                    : `📅 Client appointment confirmed in Calendar & <b>+5,000 ₺</b> revenue logged automatically.<br>Today's Total Revenue: <b>${demoState.revenue.toLocaleString()} ₺</b>`;
+
+                appendChatMessage('user', userMsg);
+                setTimeout(() => {
+                    appendChatMessage('bot', botReply);
+                    updateDashboardUI();
+                    addLedgerRow(
+                        currentLang === 'ar' ? 'إيراد' : 'Revenue',
+                        currentLang === 'ar' ? 'حجز موعد عميل جديد (AI Receptionist)' : 'New Client Booking (AI Receptionist)',
+                        '+5,000 ₺',
+                        true
+                    );
+                }, 350);
+            }
+        }
+
+        function resetDemo() {
+            demoState = { revenue: 24500, expense: 6200, expCount: 4 };
+            updateDashboardUI();
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = '';
+            appendChatMessage('bot', translations[currentLang].wa_welcome);
+        }
+
+        // ROI Calculator Logic
+        function calculateROI() {
+            const invoices = parseInt(document.getElementById('invoiceSlider').value, 10);
+            const messages = parseInt(document.getElementById('messageSlider').value, 10);
+
+            document.getElementById('invoiceCountVal').textContent = invoices.toLocaleString();
+            document.getElementById('messageCountVal').textContent = messages.toLocaleString();
+
+            // Formula: ~8 mins saved per invoice entry + ~3 mins saved per automated customer chat
+            const hoursSaved = Math.round((invoices * 8 + messages * 3) / 60);
+            // Estimated operational labor cost saved (~$8/hr equivalent in Istanbul/MENA)
+            const usdSaved = Math.round(hoursSaved * 8);
+            const trySaved = Math.round(usdSaved * 34.5);
+
+            document.getElementById('savedHours').textContent = hoursSaved.toLocaleString();
+            document.getElementById('savedUSD').textContent = usdSaved.toLocaleString();
+            document.getElementById('savedTRY').textContent = trySaved.toLocaleString();
+        }
+
+        // Initialize Calculator on Load
+        calculateROI();
+    </script>
+</body>
+</html>
